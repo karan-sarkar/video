@@ -7,6 +7,7 @@ import av
 import copy
 
 import youtube_dl
+import yt_dlp
 import subprocess
 import datetime
 
@@ -58,7 +59,7 @@ class VideoDataset(Dataset):
             print(target, os.path.exists(target))
             try:
                 if not os.path.exists(target):
-                    subprocess.check_call('ffmpeg -ss "%s" -to "%s" -i "$(youtube-dl -f best --get-url "%s")" -c:v copy  "%s"temp.mkv; ffmpeg -i "%s"temp.mkv -filter:v scale=128:72 -c:a copy "%s"'                
+                    subprocess.check_call('ffmpeg -ss "%s" -to "%s" -i "$(yt-dlp -f best --get-url "%s")" -c:v copy  "%s"temp.mkv; ffmpeg -i "%s"temp.mkv -filter:v scale=128:72 -c:a copy "%s"'                
                         % (*time, d['url'], target[:-4], target[:-4], target), shell=True)
             except:
                 remove.add(d['file'])
